@@ -52,7 +52,7 @@ int main(int argc, char **argv)
         {
             if (execve(tokens[0], argv, NULL) == -1)
             {
-                perror("errooor");
+                fprintf(stderr, "%s: Command not found\n", argv[0]);
                 free(buffer);
                 return 0;
             }
