@@ -21,10 +21,9 @@ int main(int argc, char **argv)
             free(buffer);
             return 0;
         }
-        char *tokens[MAX_TOKENS];
-        int count;
 
-        tokenize(buffer, tokens, &count);
+        char *tokens[MAX_TOKENS];
+        int count = tokenize(buffer, tokens);
 
         if (count != 1)
         {

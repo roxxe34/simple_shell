@@ -26,15 +26,18 @@ void execute_command(char *tokens[])
         wait(&status);
     }
 }
-void tokenize(char *buffer, char *tokens[], int *count)
+int tokenize(char *buffer, char *tokens[])
 {
-    char *delim = " \n";
-    *count = 0;
+        char *delim = " \n";
+    int count = 0;
 
     char *token = strtok(buffer, delim);
-    while (token != NULL && *count < MAX_TOKENS)
+    while (token != NULL && count < MAX_TOKENS)
     {
-        tokens[(*count)++] = token;
+        tokens[count] = token;
+        count++;
         token = strtok(NULL, delim);
     }
+
+    return count;
 }
