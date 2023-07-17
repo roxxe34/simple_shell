@@ -3,7 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#define MAX_TOKENS 100
 
 int main(int argc, char **argv)
 {
@@ -19,20 +18,13 @@ int main(int argc, char **argv)
         if (read == EOF)
         {
             free(buffer);
-            return 0;
+            return;
         }
 
-        char *delim = " \n";
         char *tokens[MAX_TOKENS];
-        int count = 0;
+        int count;
 
-        char *token = strtok(buffer, delim);
-        while (token != NULL)
-        {
-            tokens[count] = token;
-            count++;
-            token = strtok(NULL, delim);
-        }
+        tokenize_input(buffer, tokens, &count);
 
         if (count != 1)
         {
@@ -41,30 +33,8 @@ int main(int argc, char **argv)
             continue;
         }
 
-        pid_t pid = fork();
-        if (pid == -1)
-        {
-            perror("fork");
-            free(buffer);
-            return 0;
-        }
-        else if (pid == 0)
-        {
-            if (execve(tokens[0], argv, NULL) == -1)
-            {
-                fprintf(stderr, "%s: Command not found\n", argv[0]);
-                free(buffer);
-                return 0;
-            }
-        }
-        else
-        {
-            int status;
-            wait(&status);
-        }
+        execute_command(tokens);
 
         free(buffer);
     }
-
-    return 0;
 }
