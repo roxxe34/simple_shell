@@ -7,7 +7,7 @@
 
 int tokenize(char *buffer, char *tokens[]);
 void execute_command(char *tokens[]);
-
+int _strcmp(char *s1, char *s2);
 
 
 #endif /* SHELL_H */
