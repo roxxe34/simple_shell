@@ -13,7 +13,7 @@ int main(int argc, char **argv)
         char *buffer = NULL;
         size_t len = 0;
         ssize_t read;
-
+        
         printf("$ ");
         read = getline(&buffer, &len, stdin);
         if (read == EOF)
@@ -21,7 +21,6 @@ int main(int argc, char **argv)
             free(buffer);
             return;
         }
-
         char *tokens[MAX_TOKENS];
         int count;
 
@@ -33,9 +32,7 @@ int main(int argc, char **argv)
             free(buffer);
             continue;
         }
-
         execute_command(tokens);
-
         free(buffer);
     }
 }
