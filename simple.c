@@ -8,11 +8,15 @@
 int main(int argc, char **argv)
 {
     (void)argc;
+    (void)argv;
+
     while (1)
     {
+        char *tokens[MAX_TOKENS];
         char *buffer = NULL;
         size_t len = 0;
         ssize_t read;
+        int count;
 
         printf("$ ");
         read = getline(&buffer, &len, stdin);
@@ -22,8 +26,7 @@ int main(int argc, char **argv)
             return 0;
         }
 
-        char *tokens[MAX_TOKENS];
-        int count = tokenize(buffer, tokens);
+       count = tokenize(buffer, tokens);
 
         if (count != 1)
         {
