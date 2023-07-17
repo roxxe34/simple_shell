@@ -4,40 +4,34 @@
 #include <unistd.h>
 #include "shell.h"
 
-void execute_command(char *tokens[])
-{
+void execute_command(char *tokens[]) {
     pid_t pid = fork();
-    if (pid == -1)
-    {
+    if (pid == -1) {
         perror("fork");
         return;
-    }
-    else if (pid == 0)
-    {
-        if (execve(tokens[0], tokens, tokens) == -1)
-        {
-            fprintf(stderr, "%s: Command not found\n", tokens[0]);
-            exit(EXIT_FAILURE);
-        }
-    }
-    else
-    {
+    } else if (pid == 0) {
+        execve(tokens[0], tokens, NULL);
+        fprintf(stderr, "%s: Command not found\n", tokens[0]);
+        exit(EXIT_FAILURE);
+    } else {
         int status;
         wait(&status);
     }
 }
-int tokenize(char *buffer, char *tokens[])
-{
-        char *delim = " \n";
+int tokenize(char *buffer, char *tokens[]) {
+    char *delim = " \n";
     int count = 0;
 
     char *token = strtok(buffer, delim);
-    while (token != NULL && count < MAX_TOKENS)
-    {
+    while (token != NULL && count < MAX_TOKENS) {
         tokens[count] = token;
         count++;
         token = strtok(NULL, delim);
     }
+
+    // Set the last element of the array to NULL as required by execve
+    tokens[count] = NULL;
+
     return count;
 }
 
