@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
        count = tokenize(buffer, tokens);
 
-        if (count != 1)
+        if (count == 0)
         {
             fprintf(stderr, "Invalid input\n");
             free(buffer);
