@@ -24,7 +24,7 @@ int main(int argc, char **argv)
         char *tokens[MAX_TOKENS];
         int count;
 
-        tokenize_input(buffer, tokens, &count);
+        tokenize(buffer, tokens, &count);
 
         if (count != 1)
         {
