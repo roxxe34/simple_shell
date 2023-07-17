@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef SHELL_H
+#define SHELL_H
 
 #include <sys/wait.h>
 
@@ -10,4 +10,4 @@ void tokenize(char *buffer, char *tokens[], int *count);
 
 
 
-#endif
+#endif /* SHELL_H */

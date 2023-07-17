@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include "shell.h"
 
 void execute_command(char *tokens[])
 {
@@ -12,7 +14,7 @@ void execute_command(char *tokens[])
     }
     else if (pid == 0)
     {
-        if (execvp(tokens[0], tokens) == -1)
+        if (execve(tokens[0], tokens, tokens) == -1)
         {
             fprintf(stderr, "%s: Command not found\n", tokens[0]);
             exit(EXIT_FAILURE);

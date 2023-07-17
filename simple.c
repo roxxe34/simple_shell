@@ -13,13 +13,13 @@ int main(int argc, char **argv)
         char *buffer = NULL;
         size_t len = 0;
         ssize_t read;
-        
+
         printf("$ ");
         read = getline(&buffer, &len, stdin);
         if (read == EOF)
         {
             free(buffer);
-            return;
+            return 0;
         }
         char *tokens[MAX_TOKENS];
         int count;
