@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
         printf("$ ");
         read = getline(&buffer, &len, stdin);
-        if (read == EOF)
+        if (read == EOF || _strcmp(buffer, "exit\n") == 0)
         {
             free(buffer);
             return 0;
