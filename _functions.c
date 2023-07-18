@@ -32,7 +32,7 @@ int tokenize(char *buffer, char *tokens[]) {
 
     char *token = strtok(buffer, delim);
     while (token != NULL && count < MAX_TOKENS) {
-        tokens[count] = token;
+        tokens[count] = strdup(token);
         count++;
         token = strtok(NULL, delim);
     }
