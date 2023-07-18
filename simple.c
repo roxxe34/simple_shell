@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
         if (read == EOF || _strcmp(buffer, "exit\n") == 0) {
 		free(buffer);
 		freetok(tokens, count);
-            return 0;
+           	exit(0);
         }
 
         count = tokenize(buffer, tokens);
