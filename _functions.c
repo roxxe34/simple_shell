@@ -51,8 +51,10 @@ int _strcmp(char *s1, char *s2) {
     }
     return *s1 - *s2;
 }
-void freetok(char *tokens[]){
-     for (int i = 0; i < count; i++) 
+void freetok(char *tokens[], int count)
+{
+     int i;
+    for (i = 0; i < count; i++) 
          {
         free(tokens[i]);
          }
