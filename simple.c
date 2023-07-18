@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
         }else if (count >= 1){
 		execute_command(tokens);
 		free(buffer);
-		freetok(tokens);
+		freetok(tokens, count);
 	}
     }
 }
