@@ -8,6 +8,6 @@
 int tokenize(char *buffer, char *tokens[]);
 void execute_command(char *tokens[]);
 int _strcmp(char *s1, char *s2);
-void freetok(char *tokens[]);
+void freetok(char *tokens[], int count);
 
 #endif /* SHELL_H */
