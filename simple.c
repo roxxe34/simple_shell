@@ -4,14 +4,11 @@
 #include <unistd.h>
 #include "shell.h"
 
-
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
 
-    while (1)
-    {
+    while (1) {
         char *tokens[MAX_TOKENS];
         char *buffer = NULL;
         size_t len = 0;
@@ -20,16 +17,14 @@ int main(int argc, char **argv)
 
         printf("$ ");
         read = getline(&buffer, &len, stdin);
-        if (read == EOF || _strcmp(buffer, "exit\n") == 0)
-        {
+        if (read == EOF || _strcmp(buffer, "exit\n") == 0) {
             free(buffer);
             return 0;
         }
 
-       count = tokenize(buffer, tokens);
+        count = tokenize(buffer, tokens);
 
-        if (count == 0)
-        {
+        if (count == 0) {
             fprintf(stderr, "Invalid input\n");
             free(buffer);
             continue;
