@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +15,7 @@ void execute_command(char *tokens[])
     }
     else if (pid == 0)
     {
-        if (execve(tokens[0], tokens, tokens) == -1)
+        if (execve(tokens[0], tokens, NULL) == -1)
         {
             fprintf(stderr, "%s: Command not found\n", tokens[0]);
             exit(EXIT_FAILURE);
@@ -38,6 +39,7 @@ int tokenize(char *buffer, char *tokens[])
         count++;
         token = strtok(NULL, delim);
     }
+    tokens[count] = NULL;
     return count;
 }
 

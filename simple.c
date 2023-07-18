@@ -16,8 +16,7 @@ int main(int argc, char **argv)
         char *buffer = NULL;
         size_t len = 0;
         ssize_t read;
-        int count;
-
+	int count = 0;
         printf("$ ");
         read = getline(&buffer, &len, stdin);
         if (read == EOF || _strcmp(buffer, "exit\n") == 0)
@@ -26,15 +25,16 @@ int main(int argc, char **argv)
             return 0;
         }
 
-       count = tokenize(buffer, tokens);
+        count = tokenize(buffer, tokens);
 
-        if (count != 1)
+        if (count == 0)
         {
             fprintf(stderr, "Invalid input\n");
             free(buffer);
             continue;
-        }
-        execute_command(tokens);
-        free(buffer);
+        }else if (count >= 1){
+		execute_command(tokens);
+		free(buffer);
+	}
     }
 }
