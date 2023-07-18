@@ -3,7 +3,6 @@
 
 #include <sys/wait.h>
 
-
 #define MAX_TOKENS 100
 
 int tokenize(char *buffer, char *tokens[]);
