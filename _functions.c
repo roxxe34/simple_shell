@@ -5,11 +5,9 @@
 #include <unistd.h>
 #include "shell.h"
 
-void execute_command(char *tokens[])
-{
+void execute_command(char *tokens[]) {
     pid_t pid = fork();
-    if (pid == -1)
-    {
+    if (pid == -1) {
         perror("fork");
         return;
     }
@@ -27,30 +25,29 @@ void execute_command(char *tokens[])
         wait(&status);
     }
 }
-int tokenize(char *buffer, char *tokens[])
-{
-        char *delim = " \n";
+
+int tokenize(char *buffer, char *tokens[]) {
+    char *delim = " \n";
     int count = 0;
 
     char *token = strtok(buffer, delim);
-    while (token != NULL && count < MAX_TOKENS)
-    {
+    while (token != NULL && count < MAX_TOKENS) {
         tokens[count] = token;
         count++;
         token = strtok(NULL, delim);
     }
+
     tokens[count] = NULL;
     return count;
 }
 
-int _strcmp(char *s1, char *s2){
-while(*s1 && *s2)
-{
-    if(*s1 != *s2){
-        return *s1 - *s2;
+int _strcmp(char *s1, char *s2) {
+    while (*s1 && *s2) {
+        if (*s1 != *s2) {
+            return *s1 - *s2;
+        }
+        s1++;
+        s2++;
     }
-    s1++;
-    s2++;
-}
-return *s1 - *s2;
+    return *s1 - *s2;
 }
