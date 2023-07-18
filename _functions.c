@@ -58,5 +58,4 @@ void freetok(char *tokens[], int count)
          {
         free(tokens[i]);
          }
-        return (0);
 }
