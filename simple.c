@@ -8,7 +8,8 @@ int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
 
-    while (1) {
+    while (1) 
+    {
         char *tokens[MAX_TOKENS];
         char *buffer = NULL;
         size_t len = 0;
@@ -35,4 +36,5 @@ int main(int argc, char **argv) {
 		freetok(tokens, count);
 	}
     }
+return (0);
 }
