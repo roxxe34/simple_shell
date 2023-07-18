@@ -37,7 +37,7 @@ int tokenize(char *buffer, char *tokens[]) {
         token = strtok(NULL, delim);
     }
 
-    
+    tokens[count] = NULL;
     return count;
 }
 
