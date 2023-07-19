@@ -5,6 +5,18 @@
 #include <unistd.h>
 #include "shell.h"
 
+int _str_search(char *text, char key)
+{
+	long unsigned int i;
+	for(i = 0 ; i < strlen(text); i++)
+	{
+		if(text[i] == key){
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void execute_command(char *tokens[])
 {
 	pid_t pid = fork();
@@ -22,18 +34,30 @@ void execute_command(char *tokens[])
 			fprintf(stderr, "PATH environment variable not set\n");
 			exit(EXIT_FAILURE);
         	}
-
-		while (dir != NULL)
+		if (_str_search(tokens[0], '/') != 0) {
+            		if (execve(tokens[0], tokens, NULL) == -1) {
+                		fprintf(stderr, "%s: Execution failed\n", tokens[0]);
+                		exit(EXIT_FAILURE);
+            		}
+		}
+		else
 		{
-			char command_path[1000];
-			snprintf(command_path, sizeof(command_path), "%s/%s", dir, tokens[0]);
-			if (access(command_path, X_OK) == 0) {
-				if (execve(command_path, tokens, NULL) == -1) {
-					fprintf(stderr, "%s: Execution failed\n", tokens[0]);
-					exit(EXIT_FAILURE);
+			while (dir != NULL)
+			{
+				char *command_path;
+				printf("================> %s\n",dir);
+				/*char command_path[1000];
+				snprintf(command_path, sizeof(command_path), "%s/%s", dir, tokens[0]);*/
+				command_path = _strcat_path(dir ,tokens[0]);
+				printf("this is command path : %s",command_path);
+				if (access(command_path, X_OK) == 0) {
+					if (execve(command_path, tokens, NULL) == -1) {
+						fprintf(stderr, "%s: Execution failed\n", tokens[0]);
+						exit(EXIT_FAILURE);
+					}
 				}
+				dir = strtok(NULL, ":");
 			}
-			dir = strtok(NULL, ":");
 		}
     	}
     	else
