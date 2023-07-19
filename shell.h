@@ -9,7 +9,9 @@ int tokenize(char *buffer, char *tokens[]);
 void execute_command(char *tokens[]);
 int _strcmp(char *s1, char *s2);
 void freetok(char *tokens[], int count);
-char *_strcat_path(char *dest, char *src);
-char *_getenviron(char *env_var);
+char* _getenviron(char* name);
+int my_strncmp(const char* str1, const char* str2, size_t n);
+int _strlen(char *str);
+char *_strcpy(char *dest, char *src);
 
 #endif /* SHELL_H */
