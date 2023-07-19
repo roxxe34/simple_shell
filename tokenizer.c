@@ -20,7 +20,7 @@ char* my_strtok(char *str, const char *delim) {
         *nextToken = '\0';
         token = nextToken + 1;
     } else {
-        token += strlen(token);
+        token += _strlen(token);
     }
 
     return result;

@@ -15,21 +15,21 @@ void execute_command(char *tokens[]) {
             return;
         }
 
-        if (strcmp(tokens[0], "env") == 0) {
+        if (_strcmp(tokens[0], "env") == 0) {
             print_environment();
             return;
         }
 
-        strcpy(path_copy, path);
+        _strcpy(path_copy, path);
 
         dir = strtok(path_copy, ":");
         while (dir != NULL) {
             char temp_command_path[1024];
-            size_t dir_len = strlen(dir);
+            size_t dir_len = _strlen(dir);
 
-            strcpy(temp_command_path, dir);
+            _strcpy(temp_command_path, dir);
             temp_command_path[dir_len] = '/';
-            strcpy(temp_command_path + dir_len + 1, tokens[0]);
+            _strcpy(temp_command_path + dir_len + 1, tokens[0]);
 
             if (access(temp_command_path, X_OK) == 0) {
                 command_path = temp_command_path;
