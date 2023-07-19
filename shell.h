@@ -30,5 +30,7 @@ char *_strcpy(char *dest, const char *src);
 char *_strdup(const char *str);
 int _atoi(char *s);
 char *_strpbrk(const char *str1, const char *str2);
+void read_input_and_execute(void);
+void handle_exit_command(char **tokens, int count);
 
 #endif
