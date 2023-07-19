@@ -16,58 +16,56 @@ int _str_search(char *text, char key)
 	return (0);
 }
 
-void execute_command(char *tokens[]) {
-    pid_t pid = fork();
+void execute_command(char* tokens[]) {
+    int is_full_path = strchr(tokens[0], '/') != NULL;
+    char* command_path = tokens[0];
+    pid_t pid;
+    if (!is_full_path) {
+        char* path = getenv("PATH");
+        char* dir = strtok(path, ":");
+
+        if (path == NULL) {
+            write(STDERR_FILENO, "PATH environment variable not set\n", 34);
+            return;
+        }
+
+        while (dir != NULL) {
+            char temp_command_path[1024];
+            size_t dir_len = strlen(dir);
+            
+            strcpy(temp_command_path, dir);
+            temp_command_path[dir_len] = '/';
+            strcpy(temp_command_path + dir_len + 1, tokens[0]);
+
+            if (access(temp_command_path, X_OK) == 0) {
+                command_path = temp_command_path;
+                break;
+            }
+            dir = strtok(NULL, ":");
+        }
+    }
+
+    if (access(command_path, X_OK) != 0) {
+        fprintf(stderr, "%s: Command not found\n", tokens[0]);
+        return;
+    }
+
+    pid = fork();
     if (pid == -1) {
         perror("fork");
         return;
-    } else if (pid == 0) 
-    {
-        int is_full_path = _str_search(tokens[0], '/') != 0;
+    }
 
-        if (is_full_path) {
-            
-            if (execve(tokens[0], tokens, NULL) == -1) {
-                write(STDERR_FILENO, tokens[0], _strlen(tokens[0]));
-                write(STDERR_FILENO, ": Execution failed\n", 18);
-                exit(EXIT_FAILURE);
-            }
-        } else {
-        
-            char *path = _getenviron("PATH");
-            char *dir = strtok(path, ":");
-
-            if (path == NULL) {
-                write(STDERR_FILENO, "PATH environment variable not set\n", 34);
-                exit(EXIT_FAILURE);
-            }
-
-            while (dir != NULL) {
-                char command_path[1024];
-                size_t dir_len = _strlen(dir);
-                size_t token_len = _strlen(tokens[0]);
-                _strcpy(command_path, dir);
-                 command_path[dir_len] = '/';
-                _strcpy(command_path + dir_len + 1, tokens[0]);
-
-                if (access(command_path, X_OK) == 0) {
-                    if (execve(command_path, tokens, NULL) == -1) {
-                        write(STDERR_FILENO, tokens[0], token_len);
-                        write(STDERR_FILENO, ": Execution failed\n", 18);
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                dir = strtok(NULL, ":");
-            }
+    if (pid == 0) {
+        if (execve(command_path, tokens, NULL) == -1) {
+            fprintf(stderr, "%s: Execution failed\n", tokens[0]);
+            exit(EXIT_FAILURE);
         }
     } else {
-
         int status;
         waitpid(pid, &status, 0);
     }
 }
-
-
 int tokenize(char *buffer, char *tokens[])
 {
     	char *delim = " \n";
