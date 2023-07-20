@@ -1,39 +1,5 @@
 #include "shell.h"
-/**
- * _strlen - Calculate the length of a null-terminated string.
- * @str: Pointer to the string.
- *
- * Return: The number of characters in the string.
- */
-int _strlen(const char *str)
-{
-	int len = 0;
-
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-	return (len);
-}
-/**
- * _strcpy - Copy the contents of the source string to the destination string.
- * @dest: Pointer to the destination buffer.
- * @src: Pointer to the source string.
- *
- * Return: Pointer to the destination string.
- */
-
-char *_strcpy(char *dest, const char *src)
-{
-	int a;
-
-	for (a = 0; src[a] != '\0'; a++)
-	{
-		dest[a] = src[a];
-	}
-	dest[a] = '\0';
-	return (dest);
-}
+char *shell_name = NULL;
 /**
  * handle_exit_command - Handle the "exit" command and exit the shell.
  * @tokens: An array of tokens representing the command and arguments.
@@ -59,11 +25,12 @@ void handle_exit_command(char **tokens, int count)
 /**
  * read_input_and_execute - Read user input and execute commands.
  */
-void read_input_and_execute(void)
+void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
+	shell_name = argv[0];
 
 	while (1)
 	{
@@ -81,7 +48,8 @@ void read_input_and_execute(void)
 		}
 		count = tokenize(line, tokens);
 		if (count == 0)
-		{
+		{	
+			print(shell_name, STDERR_FILENO);
 			fprintf(stderr, "Invalid input\n");
 			continue;
 		} else if (count >= 1)
@@ -101,8 +69,8 @@ void read_input_and_execute(void)
  * main - Main function that starts the simple shell.
  * Return: Always 0.
  */
-int main(void)
+int main(int argc, char **argv)
 {
-	read_input_and_execute();
+	read_input_and_execute(argc, argv);
 	return (0);
 }
