@@ -28,3 +28,52 @@ int my_strncmp(const char *str1, const char *str2, size_t n)
 	}
 	return (0);
 }
+/**
+ * _strlen - Calculate the length of a null-terminated string.
+ * @str: Pointer to the string.
+ *
+ * Return: The number of characters in the string.
+ */
+int _strlen(const char *str)
+{
+	int len = 0;
+
+	while (str[len] != '\0')
+	{
+		len++;
+	}
+	return (len);
+}
+/**
+ * _strcpy - Copy the contents of the source string to the destination string.
+ * @dest: Pointer to the destination buffer.
+ * @src: Pointer to the source string.
+ *
+ * Return: Pointer to the destination string.
+ */
+
+char *_strcpy(char *dest, const char *src)
+{
+	int a;
+
+	for (a = 0; src[a] != '\0'; a++)
+	{
+		dest[a] = src[a];
+	}
+	dest[a] = '\0';
+	return (dest);
+}
+/**
+ *print - prints a string to stdout
+ *@string: string to be printed
+ *@stream: stream to print out to
+ *
+ *Return: void, return nothing
+ */
+void print(char *string, int stream)
+{
+	int i = 0;
+
+	for (; string[i] != '\0'; i++)
+		write(stream, &string[i], 1);
+}

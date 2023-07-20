@@ -16,7 +16,10 @@ static char *find_command_path(const char *command_name)
 
 	if (path == NULL)
 	{
-		write(STDERR_FILENO, "PATH environment variable not set\n", 34);
+		print(shell_name, STDERR_FILENO);
+		print(": 1", STDERR_FILENO);
+		print(path, STDERR_FILENO);
+		print(": PATH environment variable not set\n", STDERR_FILENO);
 		return (NULL);
 	}
 
@@ -61,8 +64,10 @@ static void execute_command_by_path(const char *command_path, char *tokens[])
 	{
 		if (execve(command_path, tokens, NULL) == -1)
 		{
-			fprintf(stderr, "%s: Execution failed\n", tokens[0]);
-			my_exit(EXIT_FAILURE);
+		print(shell_name, STDERR_FILENO);
+		print(": 1: ", STDERR_FILENO);
+		print(tokens[0], STDERR_FILENO);
+		print(": Execution failed\n", STDERR_FILENO);
 		}
 	}
 	else
@@ -93,14 +98,21 @@ void execute_command(char *tokens[])
 		command_path = find_command_path(tokens[0]);
 		if (command_path == NULL)
 		{
-			fprintf(stderr, "%s: Command not found\n", tokens[0]);
+			print(shell_name, STDERR_FILENO);
+			print(": 1: ", STDERR_FILENO);
+			print(tokens[0], STDERR_FILENO);
+			print(": Command not found\n", STDERR_FILENO);
 			return;
 		}
 	}
 
 	if (access(command_path, X_OK) != 0)
 	{
-	fprintf(stderr, "%s:Command not found path is:%s\n", tokens[0], command_path);
+		print(shell_name, STDERR_FILENO);
+		print(": 1: ", STDERR_FILENO);
+		print(tokens[0], STDERR_FILENO);
+		print(": Command not found path is:", STDERR_FILENO);
+		print(command_path, STDERR_FILENO);
 		return;
 	}
 
