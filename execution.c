@@ -6,7 +6,7 @@
  * @command_name: The name of the command to find.
  *
  * Return: A dynamically allocated string containing the full
- *         path of the command,or NULL if the command is not found.
+ *		 path of the command,or NULL if the command is not found.
  */
 static char *find_command_path(const char *command_name)
 {
@@ -94,6 +94,11 @@ void execute_command(char *tokens[])
 			print_environment();
 			return;
 		}
+		else if (_strcmp(tokens[0], "cd") == 0)
+		{
+		cd_command(tokens[1]);
+		return;
+		}
 
 		command_path = find_command_path(tokens[0]);
 		if (command_path == NULL)
@@ -115,9 +120,7 @@ void execute_command(char *tokens[])
 		print(command_path, STDERR_FILENO);
 		return;
 	}
-
 	execute_command_by_path(command_path, tokens);
-
 	if (!is_full_path)
 		free(command_path);
 }

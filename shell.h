@@ -24,7 +24,7 @@ void execute_command(char *tokens[]);
 int tokenize(char *buffer, char *tokens[]);
 int _strcmp(const char *s1, const char *s2);
 void freetok(char *tokens[], int count);
-char *_getenviron(char *name);
+char *_getenviron(const char *name);
 int my_strncmp(const char *str1, const char *str2, size_t n);
 int _strlen(const char *str);
 char *_strcpy(char *dest, const char *src);
@@ -34,5 +34,6 @@ char *_strpbrk(const char *str1, const char *str2);
 void read_input_and_execute(int argc __attribute__((unused)), char **argv);
 void handle_exit_command(char **tokens, int count);
 void print(char *string, int stream);
+void cd_command(char* path);
 
 #endif

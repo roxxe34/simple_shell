@@ -32,7 +32,7 @@ void initialize_buffer(char **lineptr, size_t *n)
  * and dynamically adjusts its size.
  *
  * Return: The number of characters read (excluding null terminator)on success,
- *         or -1 on failure.
+ *		 or -1 on failure.
  */
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {

@@ -1,26 +1,24 @@
 #include "shell.h"
-
 /**
  * _getenviron - Searches for the value of an environment variable.
  * @name: The name of the environment variable.
  *
  * Return: If the environment variable is found, return a pointer to its value.
- *         Otherwise, return NULL.
+ *		 Otherwise, return NULL.
  */
-char *_getenviron(char *name)
+char *_getenviron(const char *name)
 {
-	char *pair_ptr;
-	char *name_cpy;
+	char **env;
 
-	for (; *environ != NULL; environ++)
+	size_t name_len = _strlen(name);
+
+	for (env = environ; *env != NULL; env++)
 	{
-		for (pair_ptr = *environ, name_cpy = name;
-			 *pair_ptr == *name_cpy; pair_ptr++, name_cpy++) {
-			if (*pair_ptr == '=')
-				break;
+		if (my_strncmp(*env, name, name_len) == 0 && (*env)[name_len] == '=')
+		{
+
+			return (*env + name_len + 1);
 		}
-		if ((*pair_ptr == '=') && (*name_cpy == '\0'))
-			return (pair_ptr + 1);
 	}
 	return (NULL);
 }
