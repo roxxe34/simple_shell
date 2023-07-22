@@ -116,7 +116,11 @@ int _strcmp(const char *s1, const char *s2)
 	}
 	return (*s1 - *s2);
 }
-
+/**
+ * set_environment_variable - se environment variable
+ * @variable: The name of the variable
+ * @value: The value of the to variable
+ */
 void set_environment_variable(const char* variable, const char* value) {
     if (variable == NULL || value == NULL) {
         fprintf(stderr, "Usage: setenv VARIABLE VALUE\n");
@@ -128,7 +132,10 @@ void set_environment_variable(const char* variable, const char* value) {
         perror("Error setting environment variable");
     }
 }
-
+/**
+ * unset_environment_variable - unset environment variable
+ * @variable: The name of the variable
+ */
 void unset_environment_variable(const char* variable) {
     if (variable == NULL) {
         fprintf(stderr, "Usage: unsetenv VARIABLE\n");
