@@ -34,5 +34,7 @@ char *_strpbrk(const char *str1, const char *str2);
 void read_input_and_execute(int argc __attribute__((unused)), char **argv);
 void handle_exit_command(char **tokens, int count);
 void print(char *string, int stream);
+void set_environment_variable(const char* variable, const char* value);
+void unset_environment_variable(const char* variable);
 
 #endif

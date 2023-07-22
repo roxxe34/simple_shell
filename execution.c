@@ -95,6 +95,16 @@ void execute_command(char *tokens[])
 			return;
 		}
 
+		if (_strcmp(tokens[0], "unsetenv") == 0) {
+        	unset_environment_variable(tokens[1]);
+			return;
+    	}
+
+		if (_strcmp(tokens[0], "setenv") == 0) {
+        	set_environment_variable(tokens[1], tokens[2]);
+			return;
+		}
+
 		command_path = find_command_path(tokens[0]);
 		if (command_path == NULL)
 		{
