@@ -64,10 +64,10 @@ static void execute_command_by_path(const char *command_path, char *tokens[])
 	{
 		if (execve(command_path, tokens, NULL) == -1)
 		{
-		print(shell_name, STDERR_FILENO);
-		print(": 1: ", STDERR_FILENO);
-		print(tokens[0], STDERR_FILENO);
-		print(": Execution failed\n", STDERR_FILENO);
+			print(shell_name, STDERR_FILENO);
+			print(": 1: ", STDERR_FILENO);
+			print(tokens[0], STDERR_FILENO);
+			print(": Execution failed\n", STDERR_FILENO);
 		}
 	}
 	else

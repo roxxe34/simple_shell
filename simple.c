@@ -36,6 +36,7 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 	{
 		char *tokens[MAX_TOKENS];
 		int count = 0;
+		char *command;
 
 		printf("$ ");
 		fflush(stdout);
@@ -46,23 +47,32 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 			freetok(tokens, count);
 			my_exit(0);
 		}
-		count = tokenize(line, tokens);
-		if (count == 0)
-		{	
-			print(shell_name, STDERR_FILENO);
-			fprintf(stderr, "Invalid input\n");
-			continue;
-		} else if (count >= 1)
-		{
-			if (_strcmp(tokens[0], "exit") == 0)
-			{
-				handle_exit_command(tokens, count);
-			} else
-			{
-				execute_command(tokens);
+
+		/*kfjdhkdsjhfkjsdhf*/
+		command = my_strtok(line, ";");
+		while (command != NULL) {
+			count = tokenize(command, tokens);
+			if (count == 0)
+			{	
+				print(shell_name, STDERR_FILENO);
+				fprintf(stderr, "Invalid input\n");
+				continue;
 			}
-			freetok(tokens, count);
+			else if (count >= 1)
+			{
+				if (_strcmp(tokens[0], "exit") == 0)
+				{
+					handle_exit_command(tokens, count);
+				}
+				else
+				{
+					execute_command(tokens);
+				}
+				freetok(tokens, count);
+			}
+			command = my_strtok(NULL, ";");
 		}
+		/*kfjdhkdsjhfkjsdhf*/
 	}
 }
 /**
