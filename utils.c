@@ -22,7 +22,7 @@ int is_number(const char *str)
  * @c: The character to find
  *
  * Return: A pointer to the first occurrence of the character in the string,
- *         or NULL if the character is not found.
+ *		 or NULL if the character is not found.
  */
 char *_str_search(char *s, char c)
 {
@@ -105,7 +105,7 @@ char *_strdup(const char *str)
  * @s2: The second string to compare
  *
  * Return: An integer less than, equal to, or greater than zero if s1 is found,
- *         respectively, to be less than, to match, or be greater than s2.
+ *		 respectively, to be less than, to match, or be greater than s2.
  */
 int _strcmp(const char *s1, const char *s2)
 {

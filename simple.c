@@ -24,12 +24,15 @@ void handle_exit_command(char **tokens, int count)
 }
 /**
  * read_input_and_execute - Read user input and execute commands.
+ * @argc: The number of arguments
+ * @argv: The command of the command
  */
 void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
+
 	shell_name = argv[0];
 
 	while (1)
@@ -48,7 +51,7 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 		}
 		count = tokenize(line, tokens);
 		if (count == 0)
-		{	
+		{
 			print(shell_name, STDERR_FILENO);
 			fprintf(stderr, "Invalid input\n");
 			continue;
@@ -57,7 +60,8 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 			if (_strcmp(tokens[0], "exit") == 0)
 			{
 				handle_exit_command(tokens, count);
-			} else
+			}
+			else
 			{
 				execute_command(tokens);
 			}
@@ -67,6 +71,8 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 }
 /**
  * main - Main function that starts the simple shell.
+ * @argv: command line arguments
+ * @argc: command line arguments
  * Return: Always 0.
  */
 int main(int argc, char **argv)
