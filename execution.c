@@ -102,6 +102,16 @@ void handle_builtin_command(char *tokens[])
 	{
 		cd_command(tokens[1]);
 	}
+	else if (_strcmp(tokens[0], "setenv") == 0)
+	{
+		set_environment_variable(tokens[1], tokens[2]);
+		return;
+	}
+	else if (_strcmp(tokens[0], "unsetenv") == 0)
+	{
+        	unset_environment_variable(tokens[1]);
+			return;
+    }
 	else if (_strcmp(tokens[0], "echo") == 0)
 	{
 		for (i = 1; tokens[i] != NULL; i++)
@@ -173,7 +183,9 @@ void execute_command(char *tokens[])
 {
 	if (_strcmp(tokens[0], "env") == 0 ||
 		_strcmp(tokens[0], "cd") == 0 ||
-		_strcmp(tokens[0], "echo") == 0)
+		_strcmp(tokens[0], "echo") == 0 ||
+		_strcmp(tokens[0], "setenv") == 0 ||
+		_strcmp(tokens[0], "unsetenv") == 0 )
 	{
 		handle_builtin_command(tokens);
 	}
