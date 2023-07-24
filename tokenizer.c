@@ -40,7 +40,7 @@ char *my_strtok(char *str, const char *delim)
 		token = str;
 	}
 
-	if (token == NULL || *token == '\0')
+	if (token == NULL || *token == '\0' || *token == '#')
 	{
 		return (NULL);
 	}
