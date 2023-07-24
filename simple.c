@@ -26,33 +26,52 @@ char *read_input(int *is_interactive)
 
 	return (line);
 }
+void execute_single_command(char *tokens[])
+{
+	if (_strcmp(tokens[0], "exit") == 0)
+	{
+		handle_exit_command(tokens, 1);
+	}
+	else
+	{
+		execute_command(tokens);
+	}
+}
 /**
  * execute_input - execute a shell command
  * @input: input string
 */
 void execute_input(char *input)
 {
-	char *tokens[MAX_TOKENS];
-	int count = 0;
+	char *commands[MAX_TOKENS];
+	int command_count = 0;
+	char *token;
+	int i;
 
-	count = tokenize(input, tokens);
-	if (count == 0)
+	token = my_strtok(input, ";");
+	while (token != NULL && command_count < MAX_TOKENS)
 	{
-		print(shell_name, STDERR_FILENO);
-		fprintf(stderr, "Invalid input\n");
-		return;
+		commands[command_count] = token;
+		command_count++;
+		token = my_strtok(NULL, ";");
 	}
-	else if (count >= 1)
+
+	for (i = 0; i < command_count; i++)
 	{
-		if (_strcmp(tokens[0], "exit") == 0)
+		char *command = commands[i];
+		char *tokens[MAX_TOKENS];
+		int count = tokenize(command, tokens);
+
+		if (count == 0)
 		{
-			handle_exit_command(tokens, count);
+			print(shell_name, STDERR_FILENO);
+			fprintf(stderr, "Invalid input: %s\n", command);
 		}
 		else
 		{
-			execute_command(tokens);
+			execute_single_command(tokens);
+			freetok(tokens, count);
 		}
-		freetok(tokens, count);
 	}
 }
 /**
@@ -100,54 +119,4 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 		execute_input(input);
 		free(input);
 	}
-}
-/**
- * main - Main function that starts the simple shell.
- * @argv: command line arguments
- * @argc: command line arguments
- * Return: Always 0.
- */
-
-int main(int argc, char **argv)
-{
-	char *line;
-	char *tokens[MAX_TOKENS];
-	size_t len;
-	ssize_t read;
-	int count;
-	char *shell_name = argv[0];
-
-	if (argc == 2)
-	{
-		FILE *file = fopen(argv[1], "r");
-
-		if (!file)
-		{
-			print(shell_name, STDERR_FILENO);
-			perror("Error opening file");
-			return (1);
-		}
-		line = NULL;
-		len = 0;
-		while ((read = my_getline(&line, &len, file)) != -1)
-		{
-			if (line[read - 1] == '\n')
-				line[read - 1] = '\0';
-
-			count = tokenize(line, tokens);
-
-			if (count > 0)
-			{
-				execute_command(tokens);
-				freetok(tokens, count);
-			}
-		}
-		free(line);
-		fclose(file);
-	}
-	else
-	{
-		read_input_and_execute(argc, argv);
-	}
-	return (0);
 }

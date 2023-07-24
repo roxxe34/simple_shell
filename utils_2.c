@@ -77,7 +77,14 @@ void print(char *string, int stream)
 	for (; string[i] != '\0'; i++)
 		write(stream, &string[i], 1);
 }
-
+/**
+ * my_strchr - Locates the first occurrence of a character in a string.
+ * @str: The input null-terminated string to search in.
+ * @c: The character to be located in the string.
+ *
+ * Return: A pointer to the first occurrence of the character
+ *          'c' in the string 'str', or NULL if the character is not found.
+ */
 char *my_strchr(const char *str, int c)
 {
 	while (*str != '\0')

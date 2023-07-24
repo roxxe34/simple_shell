@@ -3,7 +3,7 @@
  * get_process_id - Get the process ID as a string.
  *
  * Return: A pointer to a newly allocated string containing the process ID,
- *         or NULL if an error occurs.
+ *		 or NULL if an error occurs.
  */
 char *get_process_id()
 {
@@ -40,8 +40,8 @@ char *get_process_id()
  * @variable: The input variable string starting with '$'.
  *
  * Return: A pointer to a newly allocated string containing the value of the
- *         environment variable or special value, or NULL if the variable
- *         is not found or an error occurs.
+ *		 environment variable or special value, or NULL if the variable
+ *		 is not found or an error occurs.
  */
 char *get_environment_value(const char *variable)
 {
@@ -79,8 +79,8 @@ char *get_environment_value(const char *variable)
  * @variable: The input variable string.
  *
  * Return: A pointer to a newly allocated string containing the value of the
- *         special value or environment variable, or NULL if
- *         the variable is not found or an error occurs.
+ *		 special value or environment variable, or NULL if
+ *		 the variable is not found or an error occurs.
  */
 char *get_special_value(const char *variable)
 {
