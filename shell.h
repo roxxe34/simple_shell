@@ -40,5 +40,7 @@ void cd_command(char* path);
 void print_special_value(const char *variable, int fd);
 char *get_special_value(const char *variable);
 char *my_strchr(const char *str, int c);
+void unset_environment_variable(const char* variable);
+void set_environment_variable(const char* variable, const char* value);
 
 #endif
