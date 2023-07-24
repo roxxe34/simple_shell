@@ -2,16 +2,20 @@
 char *shell_name = NULL;
 /**
  * read_input - read input from user
+ * @is_interactive: variable indicating if the shell is interactive.
  * Return: line number of input
 */
-char *read_input()
+char *read_input(int *is_interactive)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 
-	printf("$ ");
-	fflush(stdout);
+	if (*is_interactive)
+	{
+		printf("$ ");
+		fflush(stdout);
+	}
 
 	read = my_getline(&line, &len, stdin);
 	if (read == -1 || _strcmp(line, "exit\n") == 0)
@@ -80,11 +84,9 @@ void handle_exit_command(char **tokens, int count)
  */
 void read_input_and_execute(int argc __attribute__((unused)), char **argv)
 {
-	int is_interactive;
+	int is_interactive = isatty(STDIN_FILENO);
 
 	shell_name = argv[0];
-
-	is_interactive = isatty(STDIN_FILENO);
 
 	while (1)
 	{
@@ -113,6 +115,7 @@ int main(int argc, char **argv)
 	size_t len;
 	ssize_t read;
 	int count;
+	char *shell_name = argv[0];
 
 	if (argc == 2)
 	{
@@ -120,10 +123,10 @@ int main(int argc, char **argv)
 
 		if (!file)
 		{
+			print(shell_name, STDERR_FILENO);
 			perror("Error opening file");
 			return (1);
 		}
-
 		line = NULL;
 		len = 0;
 		while ((read = my_getline(&line, &len, file)) != -1)
@@ -139,7 +142,6 @@ int main(int argc, char **argv)
 				freetok(tokens, count);
 			}
 		}
-
 		free(line);
 		fclose(file);
 	}
