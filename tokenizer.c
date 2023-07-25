@@ -40,9 +40,14 @@ char *my_strtok(char *str, const char *delim)
 		token = str;
 	}
 
-	if (token == NULL || *token == '\0')
+	if (token == NULL || *token == '\0' || *token == '#')
 	{
 		return (NULL);
+	}
+
+	while (*token != '\0' && my_strchr(delim, *token) != NULL)
+	{
+		token++;
 	}
 
 	result = token;
@@ -52,7 +57,8 @@ char *my_strtok(char *str, const char *delim)
 	{
 		*nextToken = '\0';
 		token = nextToken + 1;
-	} else
+	}
+	else
 	{
 		token += _strlen(token);
 	}

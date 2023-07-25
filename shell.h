@@ -10,6 +10,8 @@
 
 #define MAX_TOKENS 100
 #define BUFFER_SIZE 1024
+#define FALSE 0
+#define TRUE 1
 
 extern char **environ;
 extern char *shell_name;
@@ -35,5 +37,10 @@ void read_input_and_execute(int argc __attribute__((unused)), char **argv);
 void handle_exit_command(char **tokens, int count);
 void print(char *string, int stream);
 void cd_command(char* path);
+void print_special_value(const char *variable, int fd);
+char *get_special_value(const char *variable);
+char *my_strchr(const char *str, int c);
+void unset_environment_variable(const char* variable);
+void set_environment_variable(const char* variable, const char* value);
 
 #endif
