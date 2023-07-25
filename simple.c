@@ -17,7 +17,7 @@ char *read_input(int *is_interactive)
 		fflush(stdout);
 	}
 
-	read = getline(&line, &len, stdin);
+	read = my_getline(&line, &len, stdin);
 	if (read == -1 || _strcmp(line, "exit\n") == 0)
 	{
 		free(line);
