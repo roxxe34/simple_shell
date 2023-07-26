@@ -8,12 +8,6 @@
 #include <unistd.h>
 #include <ctype.h>
 
-struct CommandInfo
-{
-char* shellname[1024];
-int count;
-};
-
 #define MAX_TOKENS 100
 #define BUFFER_SIZE 1024
 #define FALSE 0

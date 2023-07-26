@@ -1,5 +1,5 @@
 #include "shell.h"
-struct CommandInfo commandInfo;
+char *shell_name = NULL;
 /**
  * read_input - read input from user
  * @is_interactive: variable indicating if the shell is interactive.
