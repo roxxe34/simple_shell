@@ -34,47 +34,51 @@ void initialize_buffer(char **lineptr, size_t *n)
  * Return: The number of characters read (excluding null terminator)on success,
  *		 or -1 on failure.
  */
-ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t my_getline_file(char **lineptr, size_t *n, FILE *stream)
 {
-	size_t i = 0;
-	char ch;
+    return my_getline(lineptr, n, fileno(stream));
+}
+ssize_t my_getline(char **lineptr, size_t *n, int fd)
+{
+    size_t i = 0;
+    char ch;
 
-	initialize_buffer(lineptr, n);
+    initialize_buffer(lineptr, n);
 
-	while (1)
-	{
-		if (i >= *n)
-		{
-			char *temp;
-			*n += BUFFER_SIZE;
-			temp = (char *)realloc(*lineptr, *n);
-			if (temp == NULL)
-			{
-				perror("realloc");
-				free(*lineptr);
-				return (-1);
-			}
-			*lineptr = temp;
-		}
+    while (1)
+    {
+        if (i >= *n)
+        {
+            char *temp;
+            *n += BUFFER_SIZE;
+            temp = (char *)realloc(*lineptr, *n);
+            if (temp == NULL)
+            {
+                perror("realloc");
+                free(*lineptr);
+                return (-1);
+            }
+            *lineptr = temp;
+        }
 
-		if (read(fileno(stream), &ch, 1) <= 0)
-		{
-			if (i == 0)
-			{
-				return (-1);
-			}
-			break;
-		}
+        if (read(fd, &ch, 1) <= 0)
+        {
+            if (i == 0)
+            {
+                return (-1);
+            }
+            break;
+        }
 
-		(*lineptr)[i++] = ch;
-		if (ch == '\n')
-		{
-			break;
-		}
-	}
+        (*lineptr)[i++] = ch;
+        if (ch == '\n')
+        {
+            break;
+        }
+    }
 
-	(*lineptr)[i] = '\0';
-	return (i);
+    (*lineptr)[i] = '\0';
+    return (ssize_t)i;
 }
 /**
  * print_environment - Prints the environment variables.
