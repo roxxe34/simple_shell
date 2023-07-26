@@ -28,9 +28,9 @@ void cd_change_directory(char *path)
 		return;
 	}
 
-	if (set_env("PWD", getcwd(new_path, sizeof(new_path)), 1) == -1 ||
+	if (setenv("PWD", getcwd(new_path, sizeof(new_path)), 1) == -1 ||
 		getcwd(new_path, sizeof(new_path)) == NULL ||
-		set_env("OLDPWD", current_dir, 1) == -1) {
+		setenv("OLDPWD", current_dir, 1) == -1) {
 		perror("cd");
 		free(current_dir);
 		return;

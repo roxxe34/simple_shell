@@ -7,7 +7,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <fcntl.h>
+
+struct CommandInfo
+{
+char* shellname[1024];
+int count;
+};
 
 #define MAX_TOKENS 100
 #define BUFFER_SIZE 1024
@@ -19,7 +24,7 @@ extern char *shell_name;
 
 int is_number(const char *str);
 char *my_strtok(char *str, const char *delim);
-ssize_t my_getline(char **lineptr, size_t *n, int fd);
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 void print_environment(void);
 void my_exit(int status);
 char *_str_search(char *s, char c);
@@ -43,11 +48,5 @@ char *get_special_value(const char *variable);
 char *my_strchr(const char *str, int c);
 void unset_environment_variable(const char* variable);
 void set_environment_variable(const char* variable, const char* value);
-int put_env(const char *string);
-int set_env(const char *name, const char *value, int overwrite);
-int unset_env(const char *name);
-void write_str_to_stderr(const char *str);
-void* my_memcpy(void* dest, const void* src, size_t n);
-int custom_putenv(const char* env_var);
 
 #endif

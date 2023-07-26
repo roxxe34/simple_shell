@@ -1,5 +1,5 @@
 #include "shell.h"
-char *shell_name = NULL;
+struct CommandInfo commandInfo;
 /**
  * read_input - read input from user
  * @is_interactive: variable indicating if the shell is interactive.
@@ -17,7 +17,7 @@ char *read_input(int *is_interactive)
 		fflush(stdout);
 	}
 
-	read = my_getline(&line, &len, STDIN_FILENO);
+	read = my_getline(&line, &len, stdin);
 	if (read == -1 || _strcmp(line, "exit\n") == 0)
 	{
 		free(line);
@@ -81,20 +81,19 @@ void execute_input(char *input)
  */
 void handle_exit_command(char **tokens, int count)
 {
-	if (count == 1)
+	if (count == 2 && is_number(tokens[1]))
+	{
+		int status = _atoi(tokens[1]);
+
+		freetok(tokens, count);
+		my_exit(status);
+	} else if (count == 1)
 	{
 		freetok(tokens, count);
 		my_exit(0);
-	}
-	else if (count == 2 && is_number(tokens[1]))
+	} else
 	{
-		int status = _atoi(tokens[1]);
-		freetok(tokens, count);
-		my_exit(status);
-	}
-	else
-	{
-		fprintf(stderr, "Invalid usage of 'exit'. Usage: exit [status]\n");
+		fprintf(stderr, "Invalid usage of 'exit'. Usage: exit status\n");
 	}
 }
 /**
