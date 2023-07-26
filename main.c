@@ -1,51 +1,44 @@
 #include "shell.h"
+
 /**
- * main - Main function that starts the simple shell.
- * @argv: command line arguments
- * @argc: command line arguments
- * Return: Always 0.
+ * main - the main function
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
  */
-
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	char *line;
-	char *tokens[MAX_TOKENS];
-	size_t len;
-	ssize_t read;
-	int count;
-	char *shell_name = argv[0];
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
-	if (argc == 2)
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
+
+	if (ac == 2)
 	{
-		FILE *file = fopen(argv[1], "r");
-
-		if (!file)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
-			print(shell_name, STDERR_FILENO);
-			perror("Error opening file");
-			return (1);
-		}
-		line = NULL;
-		len = 0;
-		while ((read = my_getline(&line, &len, file)) != -1)
-		{
-			if (line[read - 1] == '\n')
-				line[read - 1] = '\0';
-
-			count = tokenize(line, tokens);
-
-			if (count > 0)
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
 			{
-				execute_command(tokens);
-				freetok(tokens, count);
+				e_puts(av[0]);
+				e_puts(": 0: Can't open ");
+				e_puts(av[1]);
+				eput_char('\n');
+				eput_char(BUF_FLUSH);
+				exit(127);
 			}
+			return (EXIT_FAILURE);
 		}
-		free(line);
-		fclose(file);
+		info->readfd = fd;
 	}
-	else
-	{
-		read_input_and_execute(argc, argv);
-	}
-	return (0);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
