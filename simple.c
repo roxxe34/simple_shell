@@ -26,6 +26,10 @@ char *read_input(int *is_interactive)
 
 	return (line);
 }
+/**
+* execute_single_command - function that execute single commands
+* @tokens: token that contain command
+*/
 void execute_single_command(char *tokens[])
 {
 	if (_strcmp(tokens[0], "exit") == 0)
