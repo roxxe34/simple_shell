@@ -36,11 +36,11 @@ char *_strpbrk(const char *str1, const char *str2);
 void read_input_and_execute(int argc __attribute__((unused)), char **argv);
 void handle_exit_command(char **tokens, int count);
 void print(char *string, int stream);
-void cd_command(char* path);
+void cd_command(char *path);
 void print_special_value(const char *variable, int fd);
 char *get_special_value(const char *variable);
 char *my_strchr(const char *str, int c);
-void unset_environment_variable(const char* variable);
-void set_environment_variable(const char* variable, const char* value);
+void unset_environment_variable(const char *variable);
+void set_environment_variable(const char *variable, const char *value);
 
 #endif
